@@ -1,5 +1,4 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
-<title>نظام مبيعات تمكين</title>
+<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style><title>نظام مبيعات تمكين</title></head><body>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap">
 <style>
@@ -260,6 +259,26 @@ dialog::backdrop{background:#0b182ebf}
 .danger-zone{border-color:var(--danger-line);background:var(--danger-bg)}
 .skel{height:13px;border-radius:7px;background:var(--line-soft);animation:pulse 1.4s ease-in-out infinite}
 @keyframes pulse{50%{opacity:.5}}
+/* ===== login ===== */
+.gate{position:fixed;inset:0;z-index:500;background:var(--rail);display:flex;align-items:center;justify-content:center;padding:16px;overflow-y:auto}
+.gate[hidden]{display:none!important}
+.gate-card{background:var(--paper-2);color:var(--ink);border-radius:20px;width:100%;max-width:400px;padding:30px 28px;box-shadow:0 40px 90px -30px #000c}
+.gate-brand{display:flex;align-items:center;gap:12px;margin-bottom:22px}
+.gate-brand svg{width:42px;height:42px}
+.gate-brand .nm{font-family:var(--font-display);font-weight:700;font-size:19px;line-height:1}
+.gate-brand .nm small{display:block;font-size:9px;letter-spacing:.34em;color:var(--accent);margin-top:6px;font-weight:600}
+.gate h2{font-family:var(--font-display);font-size:18px;margin-bottom:4px}
+.gate .note{font-size:12.5px;color:var(--muted);margin-bottom:20px;line-height:1.7}
+.gate .btn{width:100%;justify-content:center;padding:11px}
+.gate .link{background:none;border:none;color:var(--accent-ink);font-weight:600;cursor:pointer;padding:0;font-size:12.5px}
+.gate .err{background:var(--danger-soft);color:var(--danger-ink);border-radius:10px;padding:9px 12px;font-size:12.5px;margin-bottom:14px}
+.gate .ok{background:var(--ok-soft);color:var(--ok-ink);border-radius:10px;padding:9px 12px;font-size:12.5px;margin-bottom:14px}
+.acct{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid var(--rail-line)}
+.acct span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;direction:ltr;text-align:right}
+.acct button{background:none;border:1px solid var(--rail-line);color:var(--rail-ink);border-radius:8px;padding:4px 9px;font-size:11.5px;cursor:pointer;flex:none}
+.acct button:hover{background:var(--rail-hover);color:#fff}
+.top-out{display:none}
+@media(max-width:860px){.top-out{display:inline-flex}}
 @media(max-width:1080px){.chart-row{grid-template-columns:1fr}}
 @media(max-width:860px){
   .app{grid-template-columns:1fr}
@@ -300,6 +319,47 @@ dialog::backdrop{background:#0b182ebf}
   <symbol id="i-box" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8 12 3 3 8v8l9 5 9-5z"/><path d="M3 8l9 5 9-5M12 13v8"/></symbol>
   <symbol id="i-cloud" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H7a4.5 4.5 0 0 1-.6-8.96A6 6 0 0 1 17.8 9.2 4.4 4.4 0 0 1 17.5 19z"/></symbol>
 </defs></svg>
+<div class="gate" id="gate">
+  <div class="gate-card">
+    <div class="gate-brand">
+      <svg style="--mk:#0B182E;--mkf:#fff"><use href="#mark"/></svg>
+      <div class="nm">Tamkeen<small>ACADEMY</small></div>
+    </div>
+
+    <form id="g-login" hidden>
+      <h2>تسجيل الدخول</h2>
+      <div class="note">نظام المبيعات والمحاسبة — للفريق بس</div>
+      <div class="err" id="g-err" hidden></div>
+      <div class="ok" id="g-ok" hidden></div>
+      <div class="f-row"><label class="lb" for="g-email">الإيميل</label><input type="email" id="g-email" dir="ltr" autocomplete="username" required></div>
+      <div class="f-row"><label class="lb" for="g-pass">الباسورد</label><input type="password" id="g-pass" dir="ltr" autocomplete="current-password" required></div>
+      <button class="btn acc" type="submit" id="g-go">دخول</button>
+      <div style="margin-top:14px;text-align:center"><button type="button" class="link" id="g-forgot">نسيت الباسورد؟</button></div>
+    </form>
+
+    <form id="g-reset" hidden>
+      <h2>باسورد جديد</h2>
+      <div class="note">اكتب الباسورد الجديد اللي هتدخل بيه بعد كده.</div>
+      <div class="err" id="g-rerr" hidden></div>
+      <div class="f-row"><label class="lb" for="g-new">الباسورد الجديد</label><input type="password" id="g-new" dir="ltr" minlength="8" autocomplete="new-password" required></div>
+      <button class="btn acc" type="submit">حفظ الباسورد</button>
+    </form>
+
+    <div id="g-denied" hidden>
+      <h2>حسابك مش مضاف للنظام</h2>
+      <div class="note">دخلت بـ <b id="g-who" dir="ltr"></b> لكن الإيميل ده مش في قايمة أعضاء النظام. اطلب من مدير النظام يضيفك من «الإعدادات ← أعضاء النظام».</div>
+      <button class="btn" type="button" data-logout>تسجيل خروج</button>
+    </div>
+
+    <div id="g-setup" hidden>
+      <h2>النظام لسه مش متوصّل</h2>
+      <div class="note">افتح ملف <b dir="ltr">config.js</b> وحط فيه رابط مشروع Supabase والمفتاح العام، وبعدين ارفع الملفات تاني. الخطوات بالتفصيل في دليل الإعداد.</div>
+    </div>
+
+    <div id="g-wait"><div class="note" style="margin:0">جارٍ التحميل…</div></div>
+  </div>
+</div>
+
 <div class="app">
   <aside class="side">
     <div class="side-brand">
@@ -323,6 +383,7 @@ dialog::backdrop{background:#0b182ebf}
       <b id="foot-name">أكاديمية تمكين</b><br>
       نظام المبيعات والمحاسبة<br>
       <span id="foot-state">جارٍ الاتصال…</span>
+      <div class="acct"><span id="foot-user"></span><button type="button" data-logout>خروج</button></div>
     </div>
   </aside>
 
@@ -332,16 +393,17 @@ dialog::backdrop{background:#0b182ebf}
         <h1 id="pg-title">لوحة التحكم</h1>
         <div class="sub" id="pg-sub">نظرة سريعة على أداء الأكاديمية</div>
       </div>
+      <button type="button" class="btn sm ghost top-out" data-logout>تسجيل خروج</button>
       <div class="top-actions" id="pg-actions"></div>
     </header>
 
     <div class="bar notice" id="bar-off">
       <svg><use href="#i-cloud"/></svg>
-      <span><b>تعذّر الاتصال بالسيرفر.</b> اتأكد إن شباك السيرفر (start-windows.bat أو start-mac.command) لسه مفتوح على الجهاز الرئيسي، والصفحة هترجع تتصل لوحدها.</span>
+      <span><b>تعذّر الاتصال بقاعدة البيانات.</b> اتأكد من الإنترنت وحدّث الصفحة. لو المشكلة مستمرة، ادخل على Supabase واتأكد إن المشروع شغال ومش واقف (Paused).</span>
     </div>
     <div class="bar ro" id="bar-ro">
       <svg><use href="#i-user"/></svg>
-      <span><b>وضع القراءة فقط.</b> تقدر تشوف كل البيانات والتقارير، لكن التسجيل والتعديل متاح لصاحب النظام ومن عنده صلاحية التعديل.</span>
+      <span><b>وضع القراءة فقط.</b> تقدر تشوف كل البيانات والتقارير، لكن التسجيل والتعديل محتاج صلاحية «تعديل» من مدير النظام.</span>
     </div>
 
     <div class="wrap">
@@ -526,10 +588,10 @@ dialog::backdrop{background:#0b182ebf}
             </div>
           </div>
           <div class="card">
-            <div class="card-h"><div><h3>التصدير والاستيراد</h3><div class="note">البيانات محفوظة في قاعدة بيانات السيرفر المحلي</div></div></div>
+            <div class="card-h"><div><h3>التصدير والاستيراد</h3><div class="note">البيانات محفوظة في قاعدة بيانات Supabase</div></div></div>
             <div class="card-b">
               <p class="hint" style="margin-bottom:16px;line-height:1.75">
-                بياناتك بتتحفظ تلقائيًا في ملف قاعدة البيانات tamkeen.db جنب السيرفر، وأي جهاز على نفس الشبكة بيشوف نفس البيانات. خد نسخة كاملة (JSON) كل فترة احتياطي.
+                بياناتك بتتحفظ تلقائيًا على السيرفر وبتفضل موجودة من أي جهاز تدخل منه.
                 التصدير مفيد لو عايز تشتغل على الأرقام في Excel أو تحتفظ بنسخة عندك.
               </p>
               <label class="lb">تنزيل جداول Excel (CSV)</label>
@@ -546,9 +608,26 @@ dialog::backdrop{background:#0b182ebf}
                   <button class="btn" id="b-restore"><svg><use href="#i-up"/></svg> استيراد من ملف</button>
                   <input type="file" id="f-restore" accept=".json,application/json" hidden>
                 </div>
-                <div class="hint">الاستيراد بيقبل النسخة اللي نزّلتها من النسخة السحابية، فتقدر تنقل بياناتك من claude.ai لهنا.</div>
+                <div class="hint">الاستيراد بيقبل ملف «نسخة كاملة» من النسخة القديمة على claude.ai، فتقدر تنقل كل بياناتك لهنا.</div>
               </div>
             </div>
+          </div>
+        </div>
+
+        <div class="card sec-sp" id="members-card" hidden>
+          <div class="card-h"><div><h3>أعضاء النظام</h3><div class="note">مين يقدر يدخل وصلاحية كل واحد</div></div></div>
+          <div class="card-b">
+            <div class="grid3" style="align-items:end;margin-bottom:8px">
+              <div><label class="lb" for="m-email">الإيميل</label><input type="email" id="m-email" dir="ltr" placeholder="name@example.com"></div>
+              <div><label class="lb" for="m-role">الصلاحية</label>
+                <select id="m-role"><option value="editor">تعديل — يسجّل ويعدّل</option><option value="viewer">مشاهدة بس</option><option value="admin">مدير — كل الصلاحيات</option></select></div>
+              <div><button class="btn acc" id="m-add" style="width:100%;justify-content:center"><svg><use href="#i-plus"/></svg> إضافة / تحديث</button></div>
+            </div>
+            <div class="hint" style="margin-bottom:16px;line-height:1.75">بعد الإضافة هنا، اعمل للشخص حساب بنفس الإيميل من Supabase: <b>Authentication ← Users ← Add user</b> (فعّل Auto Confirm) وابعتله الإيميل والباسورد.</div>
+            <div class="tbl-wrap"><table>
+              <thead><tr><th>الإيميل</th><th>الصلاحية</th><th>تاريخ الإضافة</th><th></th></tr></thead>
+              <tbody id="m-body"></tbody>
+            </table></div>
           </div>
         </div>
 
@@ -710,10 +789,12 @@ dialog::backdrop{background:#0b182ebf}
 </dialog>
 
 <div id="toast"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
 <script>
 /* =====================================================================
    أكاديمية تمكين — نظام المبيعات والمحاسبة (نسخة سحابية)
-   البيانات في قاعدة بيانات هذه الصفحة، مشتركة بين كل من يفتح اللينك.
+   البيانات على Supabase، مشتركة بين كل أعضاء الفريق.
    ===================================================================== */
 
 const METHODS = ['فودافون كاش','إنستاباي','تحويل بنكي','فيزا / ماستركارد','كاش','PayPal','أخرى'];
@@ -723,7 +804,7 @@ const MONTHS  = ['يناير','فبراير','مارس','أبريل','مايو',
 const COLS    = ['customers','courses','sales','expenses'];
 
 /* ---------- runtime state ---------- */
-let DBX = null, DL = null, RO = false, OFFLINE = false;
+let DL = null, RO = false, OFFLINE = false;
 let page = 'dash';
 let monthlyRows = [];
 const DB = {customers:[], courses:[], sales:[], expenses:[],
@@ -801,8 +882,24 @@ function fillSelect(sel, items, placeholder, selected){
 }
 
 /* =====================================================================
-   STORE
+   STORE — Supabase
+   كل جدول فيه: id + data (JSON). الصلاحيات بتتحدد من جدول members.
    ===================================================================== */
+const CFG = window.TAMKEEN_CONFIG || {};
+let SB = null, ME = null, ROLE = null, channel = null, booted = false;
+
+/* تنزيل الملفات من المتصفح مباشرة */
+DL = {
+  save: async ({filename, data, type}) => {
+    const mime = type || (/\.csv$/i.test(filename) ? 'text/csv;charset=utf-8'
+               : /\.json$/i.test(filename) ? 'application/json' : 'text/html;charset=utf-8');
+    const url = URL.createObjectURL(new Blob([data], {type:mime}));
+    const a = document.createElement('a');
+    a.href = url; a.download = filename; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 4000);
+  }
+};
+
 function setOffline(){
   OFFLINE = true; RO = true;
   $('#bar-off').classList.add('on');
@@ -817,137 +914,210 @@ function setReadOnly(){
   render();
 }
 function writeErr(e){
-  const code = e && e.code;
-  if(code === 'invalid_argument'){ setReadOnly(); toast('مالكش صلاحية التعديل على النظام ده','err'); return; }
-  if(code === 'quota_exceeded'){ toast('قاعدة البيانات وصلت الحد الأقصى — امسح سجلات قديمة','err'); return; }
-  if(code === 'resource_exhausted'){ toast('عمليات كتير في وقت واحد — استنى شوية وجرّب تاني','err'); return; }
+  const code = e && (e.code || ''), msg = String(e && e.message || '');
+  if(code === '42501' || /row-level security|permission denied/i.test(msg)){
+    setReadOnly(); toast('مالكش صلاحية التعديل على النظام ده','err'); return;
+  }
+  if(/JWT|expired|not authenticated/i.test(msg)){ toast('الجلسة انتهت — سجّل دخول تاني','err'); showGate('login'); return; }
+  if(/fetch|network/i.test(msg)){ toast('مفيش اتصال بالإنترنت — جرّب تاني','err'); return; }
   toast('تعذّر الحفظ — جرّب تاني','err');
 }
+
+/* تطبيق تغيير على النسخة المحلية */
+function applyLocal(col, id, data){
+  if(col === 'settings'){ if(id === 'academy' && data) DB.settings = Object.assign({name:'أكاديمية تمكين',phone:'',email:'',addr:''}, data); return; }
+  const arr = DB[col], i = arr.findIndex(x => x.id === id);
+  if(data == null){ if(i >= 0) arr.splice(i,1); return; }
+  const rec = Object.assign({}, data, {id});
+  if(i >= 0) arr[i] = rec; else arr.push(rec);
+}
+
 async function put(col, rec){
-  if(!DBX){ toast('مفيش اتصال بقاعدة البيانات','err'); return false; }
-  const body = Object.assign({}, rec);
-  delete body.id;
-  try{ await DBX.collection(col).doc(rec.id).set(body); return true; }
-  catch(e){ writeErr(e); return false; }
+  if(!SB || OFFLINE){ toast('مفيش اتصال بقاعدة البيانات','err'); return false; }
+  if(RO){ toast('مالكش صلاحية التعديل على النظام ده','err'); return false; }
+  const body = Object.assign({}, rec); delete body.id;
+  const {error} = await SB.from(col).upsert({id:String(rec.id), data:body});
+  if(error){ writeErr(error); return false; }
+  applyLocal(col, String(rec.id), body); render();
+  return true;
 }
 async function drop(col, id){
-  if(!DBX){ toast('مفيش اتصال بقاعدة البيانات','err'); return false; }
-  try{ await DBX.collection(col).doc(id).delete(); return true; }
-  catch(e){ writeErr(e); return false; }
+  if(!SB || OFFLINE){ toast('مفيش اتصال بقاعدة البيانات','err'); return false; }
+  if(RO){ toast('مالكش صلاحية التعديل على النظام ده','err'); return false; }
+  const {error} = await SB.from(col).delete().eq('id', String(id));
+  if(error){ writeErr(error); return false; }
+  applyLocal(col, String(id), null); render();
+  return true;
+}
+async function putSettings(rec){
+  if(!SB || RO) throw {code:'42501'};
+  const {error} = await SB.from('settings').upsert({id:'academy', data:rec});
+  if(error) throw error;
+  applyLocal('settings', 'academy', rec);
 }
 
-/* ---------- local store: يحفظ كل البيانات في متصفح الجهاز (localStorage) ---------- */
-function makeLocalClaude(){
-  const KEY = 'tamkeen-local-db-v1';
-  /* البيانات اللي كانت مسجّلة في النسخة السحابية — بتتحمّل أول مرة تفتح الملف */
-  const SEED = {"customers": {"mvcoy8vdxooft": {"company": "", "date": "2026-08-30", "email": "haidy.ammin.ali@gmail.com", "name": "د/ هايدي أمين", "notes": "", "phone": "01227071323", "source": "أخرى"}}, "courses": {"mvcow50yvkrkd": {"active": "1", "name": "Cloade", "notes": "كورس تعليم Cloade", "price": 0}}, "sales": {"mvcoyyplhpu6t": {"amount": 2000, "courseId": "mvcow50yvkrkd", "customerId": "mvcoy8vdxooft", "date": "2026-08-30", "discount": 0, "method": "إنستاباي", "notes": "", "paid": 2000}}, "expenses": {}};
-  let mem = null;
-  try{ mem = JSON.parse(localStorage.getItem(KEY)); }catch(e){ mem = null; }
-  if(!mem){ mem = JSON.parse(JSON.stringify(SEED)); try{ localStorage.setItem(KEY, JSON.stringify(mem)); }catch(e){} }
-  const subs = {};
-  const persist = () => { try{ localStorage.setItem(KEY, JSON.stringify(mem)); }catch(e){ toast('مساحة التخزين في المتصفح امتلأت — نزّل نسخة احتياطية','err'); } };
-  const snapOf = col => ({ docs: Object.entries(mem[col]||{}).map(([id,d]) => ({id, data:()=>d})) });
-  const docSnap = path => { const [col,id] = path.split('/'); const d = (mem[col]||{})[id]; return {exists:!!d, data:()=>d}; };
-  const emit = col => (subs[col]||[]).forEach(fn => fn());
-  const sub = (key, fn) => { (subs[key] = subs[key] || []).push(fn); setTimeout(fn, 0); return () => {}; };
-  const docApi = (col, id) => ({
-    set: async body => { (mem[col] = mem[col] || {})[id] = JSON.parse(JSON.stringify(body)); persist(); emit(col); },
-    delete: async () => { if(mem[col]) delete mem[col][id]; persist(); emit(col); },
-    onSnapshot: fn => sub(col, () => fn(docSnap(col+'/'+id)))
-  });
-  const db = {
-    collection: col => ({ doc: id => docApi(col, id), onSnapshot: fn => sub(col, () => fn(snapOf(col))) }),
-    doc: path => { const [col,id] = path.split('/'); return docApi(col, id); }
-  };
-  const downloads = { save: async ({filename, data}) => {
-    const type = /\.json$/.test(filename) ? 'application/json' : /\.csv$/.test(filename) ? 'text/csv;charset=utf-8' : 'text/html;charset=utf-8';
-    const url = URL.createObjectURL(new Blob([data], {type}));
-    const a = document.createElement('a'); a.href = url; a.download = filename;
-    document.body.appendChild(a); a.click(); a.remove();
-    setTimeout(() => URL.revokeObjectURL(url), 2000);
-  }};
-  return { use: async name => name==='db' ? db : name==='downloads' ? downloads : null };
+/* تحميل جدول كامل (على دفعات لو كبير) */
+async function loadCol(col){
+  const out = [], step = 1000;
+  for(let from = 0; ; from += step){
+    const {data, error} = await SB.from(col).select('id,data').order('created_at').range(from, from+step-1);
+    if(error) throw error;
+    out.push(...data);
+    if(data.length < step) break;
+  }
+  return out;
 }
 
-/* ---------- server store: قاعدة بيانات SQLite على السيرفر المحلي (server.py) ---------- */
-async function makeServerClaude(){
-  let state = null, rev = -1;
-  const subs = [];
-  async function refresh(){
-    const r = await fetch('api/all', {cache:'no-store'});
-    if(!r.ok) throw new Error('http '+r.status);
-    const j = await r.json();
-    if(j.rev === rev && state) return;
-    rev = j.rev; state = j.data;
-    subs.forEach(fn => fn());
+async function loadAll(){
+  try{
+    const results = await Promise.all(COLS.map(loadCol));
+    COLS.forEach((col,i) => { DB[col] = results[i].map(r => Object.assign({}, r.data, {id:r.id})); ready[col] = true; });
+    const st = await SB.from('settings').select('id,data').eq('id','academy').maybeSingle();
+    if(st.data) applyLocal('settings','academy', st.data.data);
+    $('#bar-off').classList.remove('on'); OFFLINE = false;
+    $('#foot-state').textContent = 'متصل — الحفظ تلقائي';
+    render();
+  }catch(e){
+    console.error(e);
+    setOffline();
   }
-  await refresh();                        /* يرمي خطأ لو السيرفر مش شغال */
-  let failing = false;
-  setInterval(() => refresh().then(() => {
-      if(failing){ failing = false; $('#bar-off').classList.remove('on'); $('#foot-state').textContent = 'متصل بالسيرفر — الحفظ تلقائي'; }
-    }).catch(() => {
-      if(!failing){ failing = true; $('#bar-off').classList.add('on'); $('#foot-state').textContent = 'السيرفر مقفول'; }
-    }), 4000);
-  const snapOf = col => ({ docs: Object.entries(state[col]||{}).map(([id,d]) => ({id, data:()=>d})) });
-  const sub = fn => { subs.push(fn); setTimeout(fn, 0); return () => {}; };
-  const call = async (method, col, id, body) => {
-    const r = await fetch('api/'+encodeURIComponent(col)+'/'+encodeURIComponent(id), {
-      method, headers:{'Content-Type':'application/json'}, body: body ? JSON.stringify(body) : undefined});
-    if(!r.ok) throw new Error('http '+r.status);
-    await refresh();
-  };
-  const docApi = (col, id) => ({
-    set: body => call('PUT', col, id, body),
-    delete: () => call('DELETE', col, id),
-    onSnapshot: fn => sub(() => { const d = (state[col]||{})[id]; fn({exists:!!d, data:()=>d}); })
-  });
-  const db = {
-    collection: col => ({ doc: id => docApi(col, id), onSnapshot: fn => sub(() => fn(snapOf(col))) }),
-    doc: path => { const [col,id] = path.split('/'); return docApi(col, id); }
-  };
-  const local = makeLocalClaude();
-  const downloads = await local.use('downloads');
-  return { use: async name => name==='db' ? db : name==='downloads' ? downloads : null };
 }
 
-(async function boot(){
-  let c = null;
-  if(window.claude && typeof window.claude.use === 'function') c = window.claude;
-  else if(location.protocol.startsWith('http')){
-    try{ c = await makeServerClaude(); }catch(e){ setOffline(); return; }
-  }
-  else c = makeLocalClaude();
-  let usr = null;
-  try{ DBX = await c.use('db'); }catch(e){ DBX = null; }
-  try{ usr = await c.use('user'); }catch(e){ usr = null; }
-  try{ DL  = await c.use('downloads'); }catch(e){ DL = null; }
-  if(!DBX){ setOffline(); return; }
-
-  $('#foot-state').textContent = location.protocol.startsWith('http') ? 'متصل بالسيرفر — الحفظ تلقائي' : 'نسخة محلية — الحفظ تلقائي على الجهاز';
-
-  if(usr){
-    try{
-      const w = await Promise.resolve(usr.can('data.write'));
-      if(w === false) setReadOnly();
-    }catch(e){ /* reads never reject; ignore */ }
-  }
-
-  COLS.forEach(col => {
-    DBX.collection(col).onSnapshot(snap => {
-      DB[col] = snap.docs.map(d => Object.assign({id:d.id}, d.data()));
-      ready[col] = true;
-      render();
-    }, err => {
-      ready[col] = true;
-      if(err && err.code === 'revoked') setReadOnly();
+function subscribe(){
+  if(channel) SB.removeChannel(channel);
+  channel = SB.channel('tamkeen-db');
+  ['customers','courses','sales','expenses','settings'].forEach(col => {
+    channel.on('postgres_changes', {event:'*', schema:'public', table:col}, payload => {
+      if(payload.eventType === 'DELETE'){ applyLocal(col, payload.old && payload.old.id, null); }
+      else if(payload.new){ applyLocal(col, payload.new.id, payload.new.data); }
       render();
     });
   });
-  DBX.doc('config/academy').onSnapshot(s => {
-    if(s.exists) DB.settings = Object.assign({name:'أكاديمية تمكين',phone:'',email:'',addr:''}, s.data());
-    render();
-  }, () => {});
+  channel.subscribe(status => {
+    if(status === 'SUBSCRIBED') $('#foot-state').textContent = 'متصل — تحديث لحظي';
+  });
+}
+
+/* ---------- شاشة الدخول ---------- */
+function showGate(which){
+  ['g-login','g-reset','g-denied','g-setup','g-wait'].forEach(id => $('#'+id).hidden = (id !== 'g-'+which));
+  $('#gate').hidden = !which;
+  if(which === 'login') setTimeout(() => $('#g-email').focus(), 30);
+}
+function gateMsg(kind, text){
+  $('#g-err').hidden = kind !== 'err'; $('#g-ok').hidden = kind !== 'ok';
+  if(kind) $('#g-'+kind).textContent = text;
+}
+
+async function enter(session){
+  ME = session.user;
+  $('#foot-user').textContent = ME.email || '';
+  const {data:role, error} = await SB.rpc('my_role');
+  if(error){ console.error(error); showGate(null); setOffline(); return; }
+  ROLE = role;
+  if(!ROLE){ $('#g-who').textContent = ME.email || ''; showGate('denied'); return; }
+  showGate(null);
+  RO = false; $('#bar-ro').classList.remove('on');
+  if(ROLE === 'viewer') setReadOnly();
+  if(booted) return;
+  booted = true;
+  await loadAll();
+  subscribe();
+  loadMembers();
+}
+
+function leave(){
+  booted = false; ME = null; ROLE = null;
+  if(channel){ SB.removeChannel(channel); channel = null; }
+  COLS.forEach(c => { DB[c] = []; ready[c] = false; });
+  members = [];
+  showGate('login');
+}
+
+(function boot(){
+  if(!window.supabase || !CFG.SUPABASE_URL || /YOUR-/.test(CFG.SUPABASE_URL + CFG.SUPABASE_KEY)){
+    showGate('setup'); return;
+  }
+  SB = window.supabase.createClient(CFG.SUPABASE_URL, CFG.SUPABASE_KEY, {
+    auth:{persistSession:true, autoRefreshToken:true, detectSessionInUrl:true}
+  });
+
+  SB.auth.onAuthStateChange((event, session) => {
+    if(event === 'PASSWORD_RECOVERY'){ showGate('reset'); return; }
+    if(event === 'SIGNED_OUT'){ leave(); return; }
+    if(session && (event === 'INITIAL_SESSION' || event === 'SIGNED_IN')){
+      setTimeout(() => enter(session), 0);   // خارج الـ callback عشان مايعلّقش الجلسة
+    }else if(!session && event === 'INITIAL_SESSION'){
+      showGate('login');
+    }
+  });
+
+  $('#g-login').addEventListener('submit', async e => {
+    e.preventDefault(); gateMsg(null);
+    const btn = $('#g-go'); btn.disabled = true; btn.textContent = 'جارٍ الدخول…';
+    const {error} = await SB.auth.signInWithPassword({email:$('#g-email').value.trim(), password:$('#g-pass').value});
+    btn.disabled = false; btn.textContent = 'دخول';
+    if(error){
+      gateMsg('err', /invalid/i.test(error.message) ? 'الإيميل أو الباسورد غلط'
+                   : /confirm/i.test(error.message) ? 'الحساب لسه متأكدش — اطلب من المدير يفعّله'
+                   : 'تعذّر الدخول — اتأكد من النت وجرّب تاني');
+    }else{ $('#g-pass').value = ''; }
+  });
+  $('#g-forgot').onclick = async () => {
+    const email = $('#g-email').value.trim();
+    if(!email){ gateMsg('err','اكتب إيميلك الأول وبعدين اضغط «نسيت الباسورد»'); return; }
+    const {error} = await SB.auth.resetPasswordForEmail(email, {redirectTo: location.origin + location.pathname});
+    gateMsg(error ? 'err' : 'ok', error ? 'تعذّر الإرسال — جرّب كمان شوية' : 'لو الإيميل مسجّل، هيوصلك لينك لتغيير الباسورد');
+  };
+  $('#g-reset').addEventListener('submit', async e => {
+    e.preventDefault();
+    const {error} = await SB.auth.updateUser({password:$('#g-new').value});
+    if(error){ $('#g-rerr').hidden = false; $('#g-rerr').textContent = 'تعذّر الحفظ — الباسورد لازم يكون 8 حروف على الأقل'; return; }
+    toast('تم تغيير الباسورد');
+    const {data} = await SB.auth.getSession();
+    if(data.session) enter(data.session); else showGate('login');
+  });
+  document.addEventListener('click', e => {
+    if(e.target.closest('[data-logout]')) SB.auth.signOut();
+  });
 })();
+
+/* ---------- أعضاء النظام (للمدير بس) ---------- */
+let members = [];
+const ROLE_T = {admin:'مدير', editor:'تعديل', viewer:'مشاهدة'};
+async function loadMembers(){
+  if(ROLE !== 'admin'){ $('#members-card').hidden = true; return; }
+  const {data, error} = await SB.from('members').select('*').order('created_at');
+  if(error){ console.error(error); return; }
+  members = data; $('#members-card').hidden = false; renderMembers();
+}
+function renderMembers(){
+  if(ROLE !== 'admin') return;
+  $('#m-body').innerHTML = members.map(m =>
+      '<tr><td dir="ltr" style="text-align:right">'+esc(m.email)+'</td>'
+    + '<td><span class="pill '+(m.role==='admin'?'ac':m.role==='editor'?'ok':'ne')+'">'+ROLE_T[m.role]+'</span></td>'
+    + '<td class="num">'+fmtDate(String(m.created_at).slice(0,10))+'</td>'
+    + '<td class="act">'+(ME && m.email.toLowerCase()===String(ME.email).toLowerCase() ? '<span class="sub-t">إنت</span>'
+        : '<button class="ic del" title="إزالة" data-m-del="'+esc(m.email)+'"><svg><use href="#i-trash"/></svg></button>')+'</td></tr>'
+  ).join('') || '<tr><td colspan="4" class="sub-t">مفيش أعضاء</td></tr>';
+}
+$('#m-add').onclick = async () => {
+  const email = $('#m-email').value.trim().toLowerCase(), role = $('#m-role').value;
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){ toast('اكتب إيميل صحيح','err'); return; }
+  const {error} = await SB.from('members').upsert({email, role});
+  if(error){ writeErr(error); return; }
+  $('#m-email').value = ''; toast('تم حفظ '+email+' — '+ROLE_T[role]); loadMembers();
+};
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-m-del]'); if(!b) return;
+  const email = b.dataset.mDel;
+  ask('إزالة عضو', 'هيتشال <b dir="ltr">'+esc(email)+'</b> من النظام ومش هيقدر يشوف أي بيانات.<br>لو عايز تمسح حسابه خالص، امسحه كمان من Supabase ← Authentication.',
+      'إزالة', async () => {
+    const {error} = await SB.from('members').delete().eq('email', email);
+    if(error){ writeErr(error); return; }
+    toast('تمت الإزالة'); loadMembers();
+  });
+});
 
 /* =====================================================================
    NAVIGATION
@@ -1008,7 +1178,7 @@ function render(){
   if(page==='customers') renderCustomers();
   if(page==='courses')   renderCourses();
   if(page==='reports')   renderReports();
-  if(page==='settings')  renderSettings();
+  if(page==='settings'){ renderSettings(); renderMembers(); }
 }
 function loadingRow(cols){
   return '<tr><td colspan="'+cols+'" style="padding:22px 14px"><div class="skel" style="width:70%;margin-bottom:9px"></div>'
@@ -1367,8 +1537,7 @@ function renderSettings(){
 $('#s-save').onclick = async () => {
   const rec = {name:$('#s-name').value.trim()||'أكاديمية تمكين', phone:$('#s-phone').value.trim(),
                email:$('#s-email').value.trim(), addr:$('#s-addr').value.trim()};
-  if(!DBX){ toast('مفيش اتصال بقاعدة البيانات','err'); return; }
-  try{ await DBX.doc('config/academy').set(rec); DB.settings = rec; render(); toast('تم حفظ بيانات الأكاديمية'); }
+  try{ await putSettings(rec); render(); toast('تم حفظ بيانات الأكاديمية'); }
   catch(e){ writeErr(e); }
 };
 
@@ -1800,7 +1969,7 @@ $('#f-restore').addEventListener('change', e => {
             if(n % 12 === 0) await sleep(140);
           }
         }
-        if(d.settings && DBX){ try{ await DBX.doc('config/academy').set(d.settings); }catch(err){} }
+        if(d.settings){ try{ await putSettings(d.settings); }catch(err){} }
         toast('تم استيراد '+n+' سجل');
       });
     }catch(err){ toast('الملف غير صالح — اختر ملف نسخة JSON','err'); }
